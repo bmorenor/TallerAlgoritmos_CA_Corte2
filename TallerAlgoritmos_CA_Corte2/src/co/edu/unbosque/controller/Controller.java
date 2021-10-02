@@ -48,8 +48,9 @@ public class Controller implements ActionListener {
 //
 //		panelPrincipal.getBotonOpciones().addActionListener(escuchador);
 //		panelPrincipal.getBotonOpciones().getActionListeners();
-//	}
 
+	// hola xd
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 			Object botonPulsado = e.getSource();
