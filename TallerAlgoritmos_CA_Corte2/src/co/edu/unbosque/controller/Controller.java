@@ -11,6 +11,12 @@ import co.edu.unbosque.view.PanelOpciones;
 import co.edu.unbosque.view.PanelPrincipal;
 import co.edu.unbosque.view.VentanaPrincipal;
 
+/**
+ * Clase Controller
+ * 
+ * @author Brayan Moreno Andres Nuñez Miguel Sierra Sergio Gomez
+ * 
+ */
 public class Controller implements ActionListener {
 
 	private OperacionArchivo operacionArchivo;
@@ -20,6 +26,9 @@ public class Controller implements ActionListener {
 	private PanelOpciones panelOpciones;
 	private PanelBuscar panelBuscar;
 
+	/**
+	 * Constructor del controller inicialización de variables
+	 */
 	public Controller() {
 		operacionArchivo = new OperacionArchivo();
 		ventanaPrincipal = new VentanaPrincipal();
@@ -27,34 +36,28 @@ public class Controller implements ActionListener {
 		panelOpciones = new PanelOpciones();
 		panelBuscar = new PanelBuscar();
 
-		listenerPanelOpciones(this);
-		listenerVentanaPrincipal(this);
-		listenerPanelBuscar(this);
+		listener(this);
 	}
 
-	private void listenerPanelBuscar(ActionListener escuchador) {
+	/**
+	 * Metodo para obtener los eventos de los botones
+	 * 
+	 * @param escuchador
+	 */
+	private void listener(ActionListener escuchador) {
+		// Boton volver
 		panelBuscar.getBotonVolver().addActionListener(escuchador);
 
-	}
-
-	private void listenerVentanaPrincipal(ActionListener escuchador) {
+		// Ventana Principal
 		ventanaPrincipal.getBotonOpciones().addActionListener(escuchador);
-
-	}
-
-	private void listenerPanelOpciones(ActionListener escuchador) {
+		// Panel Opciones
 		panelOpciones.getBotonElegirArchivo().addActionListener(escuchador);
 		panelOpciones.getBotonBuscar().addActionListener(escuchador);
 
 	}
-
-//	private void listenerPanelPrincipal(ActionListener escuchador) {
-//
-//		panelPrincipal.getBotonOpciones().addActionListener(escuchador);
-//		panelPrincipal.getBotonOpciones().getActionListeners();
-
-	// hola xd
-
+	/**
+	 * Metodo para ejecutar la logica de los botones
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object botonPulsado = e.getSource();
