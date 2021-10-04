@@ -1,27 +1,31 @@
 package co.edu.unbosque.controller;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFileChooser;
 
+import co.edu.unbosque.model.OperacionArchivo;
 import co.edu.unbosque.view.PanelBuscar;
 import co.edu.unbosque.view.PanelOpciones;
 import co.edu.unbosque.view.PanelPrincipal;
 import co.edu.unbosque.view.VentanaPrincipal;
 
 public class Controller implements ActionListener {
-	
+
+	private OperacionArchivo operacionArchivo;
+
 	private VentanaPrincipal ventanaPrincipal;
 	private PanelPrincipal panelPrincipal;
 	private PanelOpciones panelOpciones;
 	private PanelBuscar panelBuscar;
 
 	public Controller() {
+		operacionArchivo = new OperacionArchivo();
 		ventanaPrincipal = new VentanaPrincipal();
 		panelPrincipal = new PanelPrincipal();
 		panelOpciones = new PanelOpciones();
-		panelBuscar= new PanelBuscar();
-
+		panelBuscar = new PanelBuscar();
 
 		listenerPanelOpciones(this);
 		listenerVentanaPrincipal(this);
@@ -30,12 +34,12 @@ public class Controller implements ActionListener {
 
 	private void listenerPanelBuscar(ActionListener escuchador) {
 		panelBuscar.getBotonVolver().addActionListener(escuchador);
-		
+
 	}
 
 	private void listenerVentanaPrincipal(ActionListener escuchador) {
 		ventanaPrincipal.getBotonOpciones().addActionListener(escuchador);
-		
+
 	}
 
 	private void listenerPanelOpciones(ActionListener escuchador) {
@@ -50,33 +54,39 @@ public class Controller implements ActionListener {
 //		panelPrincipal.getBotonOpciones().getActionListeners();
 
 	// hola xd
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-			Object botonPulsado = e.getSource();
-		
-		if (botonPulsado==ventanaPrincipal.getBotonOpciones()) {
+		Object botonPulsado = e.getSource();
+
+		if (botonPulsado == ventanaPrincipal.getBotonOpciones()) {
 			ventanaPrincipal.setContentPane(panelOpciones);
 			ventanaPrincipal.validate();
 		}
-		if (botonPulsado==panelOpciones.getBotonElegirArchivo()) {
+		if (botonPulsado == panelOpciones.getBotonElegirArchivo()) {
 			JFileChooser selectorArchivos = new JFileChooser();
 			selectorArchivos.showOpenDialog(selectorArchivos);
-			
+
+			try {
+				String patch = selectorArchivos.getSelectedFile().getAbsolutePath();
+				operacionArchivo.leerArchivo(patch);
+			} catch (Exception error) {
+				// TODO: handle exception
+				System.out.println(error);
+			}
+
 		}
-		
-		if (botonPulsado==panelOpciones.getBotonBuscar()) {
+
+		if (botonPulsado == panelOpciones.getBotonBuscar()) {
 			ventanaPrincipal.setContentPane(panelBuscar);
 			ventanaPrincipal.validate();
 		}
-		
-		if (botonPulsado==panelBuscar.getBotonVolver()) {
+
+		if (botonPulsado == panelBuscar.getBotonVolver()) {
 			ventanaPrincipal.setContentPane(panelOpciones);
 			ventanaPrincipal.validate();
 		}
 
 	}
-
-
 
 }
