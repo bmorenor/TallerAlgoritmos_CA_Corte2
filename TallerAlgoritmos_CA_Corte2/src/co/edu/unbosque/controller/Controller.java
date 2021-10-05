@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.text.Highlighter;
+
 
 import co.edu.unbosque.model.OperacionArchivo;
 import co.edu.unbosque.view.PanelBuscar;
@@ -35,7 +38,7 @@ public class Controller implements ActionListener {
 		panelPrincipal = new PanelPrincipal();
 		panelOpciones = new PanelOpciones();
 		panelBuscar = new PanelBuscar();
-
+	
 		listener(this);
 	}
 
@@ -47,7 +50,8 @@ public class Controller implements ActionListener {
 	private void listener(ActionListener escuchador) {
 		// Boton volver
 		panelBuscar.getBotonVolver().addActionListener(escuchador);
-
+		panelBuscar.getBotonBM().addActionListener(escuchador);
+		panelBuscar.getBotonKMP().addActionListener(escuchador);
 		// Ventana Principal
 		ventanaPrincipal.getBotonOpciones().addActionListener(escuchador);
 		// Panel Opciones
@@ -72,7 +76,9 @@ public class Controller implements ActionListener {
 
 			try {
 				String patch = selectorArchivos.getSelectedFile().getAbsolutePath();
-				operacionArchivo.leerArchivo(patch);
+				String contenido = operacionArchivo.leerArchivo(patch);
+//				panelBuscar.getTabla()
+				panelBuscar.getTabla().setText(contenido);
 			} catch (Exception error) {
 				// TODO: handle exception
 				System.out.println(error);
@@ -88,6 +94,24 @@ public class Controller implements ActionListener {
 		if (botonPulsado == panelBuscar.getBotonVolver()) {
 			ventanaPrincipal.setContentPane(panelOpciones);
 			ventanaPrincipal.validate();
+		}
+		if (botonPulsado == panelBuscar.getBotonKMP()) {
+			
+			Highlighter h = panelBuscar.getTabla().getHighlighter();
+			h.removeAllHighlights();
+			String contendio =  panelBuscar.getTabla().getText();
+			String cadenaBuscar = panelBuscar.getCampoTexto().getText();
+			
+			
+			
+			for(int j = 0; j < contendio.length(); j++) {
+				
+			}
+			
+			JOptionPane.showMessageDialog(null, "holap");
+		}
+		if (botonPulsado == panelBuscar.getBotonBM()) {
+			JOptionPane.showMessageDialog(null, "holawas");
 		}
 
 	}

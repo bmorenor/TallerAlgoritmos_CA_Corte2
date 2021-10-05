@@ -1,5 +1,6 @@
 package co.edu.unbosque.view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
@@ -16,7 +18,7 @@ public class PanelBuscar extends JPanel {
 	private JButton botonBM;
 	private JButton botonKMP;
 	private JButton botonVolver;
-	private JTable tabla;
+	private JTextArea tabla;
 
 	private DefaultTableModel mod;
 	
@@ -41,17 +43,22 @@ public class PanelBuscar extends JPanel {
 
 			};
 
-			tabla = new JTable(mod);
+//			tabla = new JTable(mod);
 			
+			 tabla = new JTextArea();
+			 
+			 tabla.setBounds(350, 200, 500, 350);
+			
+			JScrollPane scroll = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			scroll.setBounds(350, 200, 500, 350);
+			
+//			TableColumnModel columnModel = tabla.getColumnModel();
 
-			JScrollPane scroll = new JScrollPane(tabla);
-			TableColumnModel columnModel = tabla.getColumnModel();
-
-			tabla.getTableHeader().setReorderingAllowed(false);
-			tabla.getTableHeader().setResizingAllowed(false);
+//			tabla.getTableHeader().setReorderingAllowed(false);
+//			tabla.getTableHeader().setResizingAllowed(false);
 
 			//tabla.setDefaultRenderer(Object.class, miRender);
-			scroll.setBounds(423, 200, 350, 350);
+//			texto.setBounds(423, 200, 350, 350);
 
 		  
 		// campo texto valor de apuesta
@@ -132,6 +139,36 @@ public class PanelBuscar extends JPanel {
 
 	public void setBotonVolver(JButton botonVolver) {
 		this.botonVolver = botonVolver;
+	}
+
+
+//	public JTable getTabla() {
+//		return tabla;
+//	}
+//
+//
+//	public void setTabla(JTable tabla) {
+//		this.tabla = tabla;
+//	}
+
+
+	public DefaultTableModel getMod() {
+		return mod;
+	}
+
+
+	public void setMod(DefaultTableModel mod) {
+		this.mod = mod;
+	}
+
+
+	public JTextArea getTabla() {
+		return tabla;
+	}
+
+
+	public void setTabla(JTextArea tabla) {
+		this.tabla = tabla;
 	}
 	
 	
