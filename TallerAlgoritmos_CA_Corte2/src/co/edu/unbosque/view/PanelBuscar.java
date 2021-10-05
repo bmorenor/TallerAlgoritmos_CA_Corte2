@@ -8,6 +8,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -15,11 +16,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 public class PanelBuscar extends JPanel {
+	
 	CampoTexto campoTexto,campoTextoRepetidos;
 	private JButton botonBM;
 	private JButton botonKMP;
 	private JButton botonVolver;
 	private JTextArea tabla;
+	private JRadioButton rbtnMayuscula,rbtnMinuscula,rbtnCombinada;
 
 	private DefaultTableModel mod;
 
@@ -92,6 +95,22 @@ public class PanelBuscar extends JPanel {
 		campoTextoRepetidos.setEditable(false);
 		campoTextoRepetidos.setBounds(42, 266, 100, 50);
 		
+		// Caracteristicas de los radioboton Mayuscula
+		rbtnMayuscula = new JRadioButton();
+		rbtnMayuscula.setBorderPainted(false);
+		rbtnMayuscula.setContentAreaFilled(false);
+		
+		rbtnMayuscula.setBounds(26, 344, 15, 10);
+		// Caracteristicas de los radioboton Minuscula
+		rbtnMinuscula = new JRadioButton();
+		rbtnMinuscula.setBorderPainted(false);
+		rbtnMinuscula.setContentAreaFilled(false);
+		rbtnMinuscula.setBounds(26, 384, 15, 10);
+		// Caracteristicas de los radioboton Combinadas
+		rbtnCombinada = new JRadioButton();
+		rbtnCombinada.setBorderPainted(false);
+		rbtnCombinada.setContentAreaFilled(false);
+		rbtnCombinada.setBounds(26, 424, 15, 10);
 
 		// Agregamos los botones al panel
 		add(botonBM);
@@ -99,6 +118,9 @@ public class PanelBuscar extends JPanel {
 		add(botonVolver);
 		add(campoTexto);
 		add(campoTextoRepetidos);
+		add(rbtnMayuscula);
+		add(rbtnMinuscula);
+		add(rbtnCombinada);
 
 		add(scroll);
 	}
