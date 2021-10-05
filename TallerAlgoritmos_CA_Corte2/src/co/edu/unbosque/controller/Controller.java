@@ -7,7 +7,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.text.Highlighter;
 
-
 import co.edu.unbosque.model.OperacionArchivo;
 import co.edu.unbosque.view.PanelBuscar;
 import co.edu.unbosque.view.PanelOpciones;
@@ -23,7 +22,7 @@ import co.edu.unbosque.view.VentanaPrincipal;
 public class Controller implements ActionListener {
 
 	private OperacionArchivo operacionArchivo;
-
+	private static String contenido;
 	private VentanaPrincipal ventanaPrincipal;
 	private PanelPrincipal panelPrincipal;
 	private PanelOpciones panelOpciones;
@@ -38,7 +37,7 @@ public class Controller implements ActionListener {
 		panelPrincipal = new PanelPrincipal();
 		panelOpciones = new PanelOpciones();
 		panelBuscar = new PanelBuscar();
-	
+
 		listener(this);
 	}
 
@@ -59,6 +58,7 @@ public class Controller implements ActionListener {
 		panelOpciones.getBotonBuscar().addActionListener(escuchador);
 
 	}
+
 	/**
 	 * Metodo para ejecutar la logica de los botones
 	 */
@@ -75,10 +75,20 @@ public class Controller implements ActionListener {
 			selectorArchivos.showOpenDialog(selectorArchivos);
 
 			try {
-				String patch = selectorArchivos.getSelectedFile().getAbsolutePath();
-				String contenido = operacionArchivo.leerArchivo(patch);
+				String path = selectorArchivos.getSelectedFile().getAbsolutePath();
+				System.out.println(path.contains("txt"));
+
+				if (validarFormato(path)) {
+
+					contenido = operacionArchivo.leerArchivo(path);
+
+					panelBuscar.getTabla().setText(contenido);
+
+				} else {
+					ventanaPrincipal.mostrarError("Por favor revisar que el\narchivo escogido sea valido");
+				}
 //				panelBuscar.getTabla()
-				panelBuscar.getTabla().setText(contenido);
+
 			} catch (Exception error) {
 				// TODO: handle exception
 				System.out.println(error);
@@ -87,8 +97,25 @@ public class Controller implements ActionListener {
 		}
 
 		if (botonPulsado == panelOpciones.getBotonBuscar()) {
-			ventanaPrincipal.setContentPane(panelBuscar);
-			ventanaPrincipal.validate();
+
+			try {
+
+				if (!contenido.equals(null)) {
+
+					ventanaPrincipal.setContentPane(panelBuscar);
+					ventanaPrincipal.validate();
+
+				} else {
+					ventanaPrincipal.mostrarError("Por favor revisar que el\narchivo escogido sea valido");
+					ventanaPrincipal.setContentPane(panelOpciones);
+				}
+
+			} catch (Exception a) {
+				ventanaPrincipal.mostrarError("Por favor revisar que el\narchivo escogido sea valido");
+				a.getSuppressed();
+
+			}
+
 		}
 
 		if (botonPulsado == panelBuscar.getBotonVolver()) {
@@ -96,24 +123,32 @@ public class Controller implements ActionListener {
 			ventanaPrincipal.validate();
 		}
 		if (botonPulsado == panelBuscar.getBotonKMP()) {
-			
+
 			Highlighter h = panelBuscar.getTabla().getHighlighter();
 			h.removeAllHighlights();
-			String contendio =  panelBuscar.getTabla().getText();
+			String contendio = panelBuscar.getTabla().getText();
 			String cadenaBuscar = panelBuscar.getCampoTexto().getText();
-			
-			
-			
-			for(int j = 0; j < contendio.length(); j++) {
-				
+
+			for (int j = 0; j < contendio.length(); j++) {
+
 			}
-			
+
 			JOptionPane.showMessageDialog(null, "holap");
 		}
 		if (botonPulsado == panelBuscar.getBotonBM()) {
 			JOptionPane.showMessageDialog(null, "holawas");
 		}
 
+	}
+
+	public static boolean validarFormato(String path) {
+		;
+		boolean respuesta = false;
+		if (path.contains("txt") || path.contains("csv") || path.contains("properties") || path.contains("dat")) {
+			respuesta = true;
+		}
+
+		return respuesta;
 	}
 
 }

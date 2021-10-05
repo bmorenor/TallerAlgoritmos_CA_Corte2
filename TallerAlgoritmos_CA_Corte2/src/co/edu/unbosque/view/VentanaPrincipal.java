@@ -2,6 +2,7 @@ package co.edu.unbosque.view;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class VentanaPrincipal extends JFrame {
 	private JButton botonOpciones;
@@ -37,6 +38,19 @@ public class VentanaPrincipal extends JFrame {
 	public void setBotonOpciones(JButton botonOpciones) {
 		this.botonOpciones = botonOpciones;
 	}
+	 public void mostrarError(String mensaje) {
+	        JOptionPane.showMessageDialog(null, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+	    }
+
+		/**
+		 * Este metodo permite mostrar un mensaje informativo en el programa
+		 * <b>pre</b> inicializar vista principal<br>
+		 * <b>post</b> Se devuelve un mensaje  <br>
+		 * @param mensaje Este es un string donde se almcena el mensaje que se quiere mostrar al usuario
+		 */
+	 public void mostrarMensaje(String mensaje) {
+	        JOptionPane.showMessageDialog(null, mensaje);
+	    }   
 	
 	
 }

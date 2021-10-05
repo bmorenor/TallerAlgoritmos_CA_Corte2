@@ -1,6 +1,7 @@
 package co.edu.unbosque.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -48,9 +49,13 @@ public class PanelBuscar extends JPanel {
 			 tabla = new JTextArea();
 			 
 			 tabla.setBounds(350, 200, 500, 350);
+			 
 			
 			JScrollPane scroll = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			scroll.setBounds(350, 200, 500, 350);
+			tabla.setFont(new Font("Consolas", 0, 16));
+			
+		
 			
 //			TableColumnModel columnModel = tabla.getColumnModel();
 
