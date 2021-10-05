@@ -54,8 +54,7 @@ public class PanelBuscar extends JPanel {
 			JScrollPane scroll = new JScrollPane(tabla, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			scroll.setBounds(350, 200, 500, 350);
 			tabla.setFont(new Font("Consolas", 0, 16));
-			
-		
+			tabla.setEditable(false);
 			
 //			TableColumnModel columnModel = tabla.getColumnModel();
 

@@ -1,10 +1,16 @@
 package co.edu.unbosque.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 
 import co.edu.unbosque.model.OperacionArchivo;
@@ -76,12 +82,16 @@ public class Controller implements ActionListener {
 
 			try {
 				String path = selectorArchivos.getSelectedFile().getAbsolutePath();
-				System.out.println(path.contains("txt"));
+//				System.out.println(path.contains("txt"));
 
 				if (validarFormato(path)) {
 
 					contenido = operacionArchivo.leerArchivo(path);
-
+					if (contenido.equals("")) {
+						JOptionPane.showMessageDialog(null, "El archivo que escogió no tiene contenido");
+						ventanaPrincipal.setContentPane(panelOpciones);
+						ventanaPrincipal.validate();
+					}
 					panelBuscar.getTabla().setText(contenido);
 
 				} else {
@@ -124,19 +134,33 @@ public class Controller implements ActionListener {
 		}
 		if (botonPulsado == panelBuscar.getBotonKMP()) {
 
-			Highlighter h = panelBuscar.getTabla().getHighlighter();
-			h.removeAllHighlights();
-			String contendio = panelBuscar.getTabla().getText();
 			String cadenaBuscar = panelBuscar.getCampoTexto().getText();
+			palabrasResaltadas(panelBuscar.getTabla(), cadenaBuscar, Color.YELLOW);
 
-			for (int j = 0; j < contendio.length(); j++) {
+//			Highlighter h = panelBuscar.getTabla().getHighlighter();
+//			h.removeAllHighlights();
+//			String contendio = panelBuscar.getTabla().getText();
+//			String cadenaBuscar = panelBuscar.getCampoTexto().getText();
+//
+//			for (int j = 0; j < contendio.length(); j++) {
+//
+//				
+//				
+//				char ch = contendio.charAt(j);
+//				if(cadenaBuscar.indexOf(ch) >=0) {
+//					try {
+//						h.addHighlight(j, j+1, DefaultHighlighter.DefaultPainter);
+//					}catch(BadLocationException ex) {
+//						
+//					}
+//				}
+//				
+//			}
 
-			}
-
-			JOptionPane.showMessageDialog(null, "holap");
 		}
 		if (botonPulsado == panelBuscar.getBotonBM()) {
-			JOptionPane.showMessageDialog(null, "holawas");
+			String cadenaBuscar = panelBuscar.getCampoTexto().getText();
+			palabrasResaltadas(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
 		}
 
 	}
@@ -149,6 +173,28 @@ public class Controller implements ActionListener {
 		}
 
 		return respuesta;
+	}
+
+	public void palabrasResaltadas(JTextArea area1, String texto, Color color) {
+		if (texto.length() >= 1) {
+			DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
+					color);
+			Highlighter h = area1.getHighlighter();
+			h.removeAllHighlights();
+			String text = area1.getText();
+			String caracteres = texto;
+			Pattern p = Pattern.compile("(?i)" + caracteres);
+			Matcher m = p.matcher(text);
+			while (m.find()) {
+				try {
+					h.addHighlight(m.start(), m.end(), highlightPainter);
+				} catch (BadLocationException ex) {
+//                    Logger.getLogger(color.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
+		}
 	}
 
 }
