@@ -3,13 +3,25 @@ package co.edu.unbosque.view;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+/**
+ * 
+ * Clase para la vista de la ventana principal
+ *@author Brayan Moreno Andres Nuñez Miguel Sierra Sergio Gomez
+ */
 public class VentanaPrincipal extends JFrame {
+	/**
+	 * Se declara los componentes
+	 */
 	private JButton botonOpciones;
+	/**
+	 * Constructor principal de la clase
+	 */
 	public VentanaPrincipal() {
 		PanelPrincipal fondo = new PanelPrincipal();
 		fondo.setLayout(null);
-		
+		/**
+		 * Inicializacion y caracteristicas del boton opciones
+		 */
 		botonOpciones = new JButton ();
 		botonOpciones.setBorderPainted(false);
 		botonOpciones.setContentAreaFilled(false);

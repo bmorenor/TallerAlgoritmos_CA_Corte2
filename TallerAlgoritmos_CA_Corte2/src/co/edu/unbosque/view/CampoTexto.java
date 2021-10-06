@@ -7,7 +7,11 @@ import java.awt.Image;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
-
+/**
+ * Clase para la vista del campo de texto
+ * @author Brayan Moreno Andres Nuñez Miguel Sierra Sergio Gomez
+ *
+ */
 public class CampoTexto extends JTextField {
 	/**
 	 * Metodo encargado de insertar un campo donde se va a ingresar el texto

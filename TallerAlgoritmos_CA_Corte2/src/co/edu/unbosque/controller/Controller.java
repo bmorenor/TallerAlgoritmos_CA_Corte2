@@ -62,6 +62,11 @@ public class Controller implements ActionListener {
 		// Panel Opciones
 		panelOpciones.getBotonElegirArchivo().addActionListener(escuchador);
 		panelOpciones.getBotonBuscar().addActionListener(escuchador);
+		/**
+		 * Escuchadores para el panel buscar
+		 */
+		panelBuscar.getRbtnConDistin().addActionListener(escuchador);
+		panelBuscar.getRbtnSinDistin().addActionListener(escuchador);
 
 	}
 
@@ -75,6 +80,27 @@ public class Controller implements ActionListener {
 		if (botonPulsado == ventanaPrincipal.getBotonOpciones()) {
 			ventanaPrincipal.setContentPane(panelOpciones);
 			ventanaPrincipal.validate();
+		}
+		
+		/**
+		 * Validacion para habilitar los radio button en caso de no estar seleccionado ninguno
+		 */
+		if(!panelBuscar.getRbtnConDistin().isSelected()&&!panelBuscar.getRbtnSinDistin().isSelected()) {
+			panelBuscar.getRbtnSinDistin().setEnabled(true);
+			panelBuscar.getRbtnConDistin().setEnabled(true);
+			
+		}
+		/**
+		 * Validacion para deshabilitar el radioboton Sin distincion en caso de que el radioboton Con distincion este seleccionado
+		 */
+		if( panelBuscar.getRbtnConDistin().isSelected() ) {
+			panelBuscar.getRbtnSinDistin().setEnabled(false);
+		}
+		/**
+		 *  Validacion para deshabilitar el radioboton Con distincion en caso de que el radioboton Sin distincion este seleccionado
+		 */
+		if(panelBuscar.getRbtnSinDistin().isSelected() ) {
+			panelBuscar.getRbtnConDistin().setEnabled(false);
 		}
 		if (botonPulsado == panelOpciones.getBotonElegirArchivo()) {
 			JFileChooser selectorArchivos = new JFileChooser();
