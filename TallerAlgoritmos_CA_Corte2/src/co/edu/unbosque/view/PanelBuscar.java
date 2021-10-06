@@ -22,7 +22,7 @@ public class PanelBuscar extends JPanel {
 	private JButton botonKMP;
 	private JButton botonVolver;
 	private JTextArea tabla;
-	private JRadioButton rbtnMayuscula,rbtnMinuscula,rbtnCombinada;
+	private JRadioButton rbtnConDistin,rbtnMinuscula,rbtnSinDistin;
 
 	private DefaultTableModel mod;
 
@@ -95,22 +95,21 @@ public class PanelBuscar extends JPanel {
 		campoTextoRepetidos.setEditable(false);
 		campoTextoRepetidos.setBounds(42, 266, 100, 50);
 		
-		// Caracteristicas de los radioboton Mayuscula
-		rbtnMayuscula = new JRadioButton();
-		rbtnMayuscula.setBorderPainted(false);
-		rbtnMayuscula.setContentAreaFilled(false);
-		
-		rbtnMayuscula.setBounds(26, 344, 15, 10);
+		// Caracteristicas de los radioboton con distincion de Mayuscula
+		rbtnConDistin = new JRadioButton();
+		rbtnConDistin.setBorderPainted(false);
+		rbtnConDistin.setContentAreaFilled(false);
+		rbtnConDistin.setBounds(26, 344, 15, 10);
 		// Caracteristicas de los radioboton Minuscula
 		rbtnMinuscula = new JRadioButton();
 		rbtnMinuscula.setBorderPainted(false);
 		rbtnMinuscula.setContentAreaFilled(false);
 		rbtnMinuscula.setBounds(26, 384, 15, 10);
-		// Caracteristicas de los radioboton Combinadas
-		rbtnCombinada = new JRadioButton();
-		rbtnCombinada.setBorderPainted(false);
-		rbtnCombinada.setContentAreaFilled(false);
-		rbtnCombinada.setBounds(26, 424, 15, 10);
+		// Caracteristicas de los radioboton Sin distincion de Mayuscula
+		rbtnSinDistin = new JRadioButton();
+		rbtnSinDistin.setBorderPainted(false);
+		rbtnSinDistin.setContentAreaFilled(false);
+		rbtnSinDistin.setBounds(26, 424, 15, 10);
 
 		// Agregamos los botones al panel
 		add(botonBM);
@@ -118,9 +117,9 @@ public class PanelBuscar extends JPanel {
 		add(botonVolver);
 		add(campoTexto);
 		add(campoTextoRepetidos);
-		add(rbtnMayuscula);
-		add(rbtnMinuscula);
-		add(rbtnCombinada);
+		add(rbtnConDistin);
+	//	add(rbtnMinuscula);
+		add(rbtnSinDistin);
 
 		add(scroll);
 	}
