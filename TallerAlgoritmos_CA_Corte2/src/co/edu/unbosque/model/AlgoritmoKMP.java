@@ -1,8 +1,11 @@
 package co.edu.unbosque.model;
 
+import java.util.ArrayList;
+
 public class AlgoritmoKMP {
 
     private  String txt;
+    private ArrayList<Integer>lista;
     private  String pat;
 
 //    public AlgoritmoKMP(String pat, String txt) {
@@ -10,11 +13,11 @@ public class AlgoritmoKMP {
 //        this.pat = pat;
 //    }
 
-   public String KMPSearch(String pat, String txt)
-    {
+   public ArrayList<Integer> KMPSearch(String pat, String txt)
+    {	lista = new ArrayList<>();
         int M = pat.length();
         int N = txt.length();
-        String mensaje = " ";
+    
         int x = 0;
 
 
@@ -34,10 +37,11 @@ public class AlgoritmoKMP {
                 i++;
             }
             if (j == M) {
-                System.out.println("Patrón encontrado en el índice " + (i - j));
+            
+                lista.add(i-j);
                 x +=1;
                // mensaje = "Patrón encontrado en el índice " + (i - j);
-                mensaje = x+"";
+            
                 j = lps[j - 1];
             }
 
@@ -51,7 +55,7 @@ public class AlgoritmoKMP {
                     i = i + 1;
             }
         }
-       return mensaje;
+       return lista;
     }
 
     void computeLPSArray(String pat, int M, int lps[])

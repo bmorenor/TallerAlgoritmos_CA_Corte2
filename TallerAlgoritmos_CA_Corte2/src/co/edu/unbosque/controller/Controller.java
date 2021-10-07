@@ -181,16 +181,12 @@ public class Controller implements ActionListener {
 			if(panelBuscar.getRbtnConDistin().isSelected()) {
 				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
 				palabrasResaltadasKMP(panelBuscar.getTabla(), cadenaBuscar, Color.YELLOW);
-				String txt1 = " ";
-				txt1 = algoritmoKMP.KMPSearch(cadenaBuscar, contenido);
-				panelBuscar.getCampoTextoRepetidos().setText(txt1);
 
 			}else if(panelBuscar.getRbtnSinDistin().isSelected()) {
 				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
-				palabrasResaltadas(panelBuscar.getTabla(), cadenaBuscar, Color.YELLOW);
-				String txt1 = " ";
-				txt1 = algoritmoKMP.KMPSearch(cadenaBuscar, contenido);
-				panelBuscar.getCampoTextoRepetidos().setText(txt1);
+				palabrasResaltadasSinDistincionKMP(panelBuscar.getTabla(), cadenaBuscar, Color.YELLOW);
+			
+		
 			}else {
 				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon diistincion o sin \ndistincion de mayusculas");
 			}
@@ -274,8 +270,8 @@ public class Controller implements ActionListener {
 			h.removeAllHighlights();
 			String text = area1.getText().toLowerCase();
 			String caracteres = texto;
-			//encontradas.addAll(algoritmoBM.funcionamientoBoyerMoore(text, caracteres));
-			//panelBuscar.getCampoTextoRepetidos().setText(encontradas.size()+"");
+			encontradas.addAll(algoritmoKMP.KMPSearch(caracteres, text));
+			panelBuscar.getCampoTextoRepetidos().setText(encontradas.size()+"");
 			boolean termino = false;
 			while (termino==false) {
 				try {
@@ -308,8 +304,8 @@ public class Controller implements ActionListener {
 			h.removeAllHighlights();
 			String text = area1.getText();
 			String caracteres = texto;
-			//encontradas.addAll(algoritmoBM.funcionamientoBoyerMoore(text, caracteres));
-			//panelBuscar.getCampoTextoRepetidos().setText(encontradas.size()+"");
+			encontradas.addAll(algoritmoKMP.KMPSearch(caracteres, text));
+			panelBuscar.getCampoTextoRepetidos().setText(encontradas.size()+"");
 			boolean termino = false;
 			while (termino==false) {
 				try {
