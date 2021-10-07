@@ -201,6 +201,9 @@ public class Controller implements ActionListener {
 				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
 				palabrasResaltadasBoyerM(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
 			}else if(panelBuscar.getRbtnSinDistin().isSelected()) {
+				/**
+				 * andres modifica esto
+				 */
 				
 			}else {
 				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon diistincion o sin \ndistincion de mayusculas");
