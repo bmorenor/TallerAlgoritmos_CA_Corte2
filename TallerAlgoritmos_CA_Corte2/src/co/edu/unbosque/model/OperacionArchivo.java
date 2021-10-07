@@ -5,17 +5,27 @@ import java.io.File;
 import java.io.FileReader;
 
 import com.sun.source.tree.CatchTree;
-
+/**
+ * OperacionArchivo es una clase usada para leer archivos
+ * @author Andres
+ *
+ */
 public class OperacionArchivo {
 
 
-	
+	/**
+	 * Es el constructor de la clase (no parametros)
+	 */
 	
 	public OperacionArchivo () {
 		
 	}
 	
-	
+	/**
+	 * Este método lee el archivo 
+	 * @param ruta: dirección del archivo
+	 * @return String: contenido del archivo
+	 */
 	public String leerArchivo (String ruta) {
 		 File archivo = null;
 	      FileReader fr = null;

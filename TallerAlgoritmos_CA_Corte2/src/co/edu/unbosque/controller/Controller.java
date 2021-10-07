@@ -175,36 +175,14 @@ public class Controller implements ActionListener {
 			String cadenaBuscar = panelBuscar.getCampoTexto().getText();
 			palabrasResaltadas(panelBuscar.getTabla(), cadenaBuscar, Color.YELLOW);
 
-//			Highlighter h = panelBuscar.getTabla().getHighlighter();
-//			h.removeAllHighlights();
-//			String contendio = panelBuscar.getTabla().getText();
-//			String cadenaBuscar = panelBuscar.getCampoTexto().getText();
-//
-//			for (int j = 0; j < contendio.length(); j++) {
-//
-//				
-//				
-//				char ch = contendio.charAt(j);
-//				if(cadenaBuscar.indexOf(ch) >=0) {
-//					try {
-//						h.addHighlight(j, j+1, DefaultHighlighter.DefaultPainter);
-//					}catch(BadLocationException ex) {
-//						
-//					}
-//				}
-//				
-//			}
-
 		}
 		if (botonPulsado == panelBuscar.getBotonBM()) {
 			if(panelBuscar.getRbtnConDistin().isSelected()) {
 				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
 				palabrasResaltadasBoyerM(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
 			}else if(panelBuscar.getRbtnSinDistin().isSelected()) {
-				/**
-				 * andres modifica esto
-				 */
-				
+				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
+				palabrasResaltadasSinDistincionBoyerM(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
 			}else {
 				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon diistincion o sin \ndistincion de mayusculas");
 			}
@@ -212,7 +190,11 @@ public class Controller implements ActionListener {
 		}
 
 	}
-
+/**
+ * Valida si el archivo seleccionado es un archivo plano
+ * @param path
+ * @return
+ */
 	public static boolean validarFormato(String path) {
 		;
 		boolean respuesta = false;
@@ -223,6 +205,16 @@ public class Controller implements ActionListener {
 		return respuesta;
 	}
 
+	
+	/**
+	 * Este método se usa para subrayar las palabrabras que coinciden del JTextArea
+	 *  de la vista (diferenciando entre mayusculas y minusculas)
+	 * @param area1
+	 * @param texto
+	 * @param color
+	 */
+	
+	
 	public void palabrasResaltadas(JTextArea area1, String texto, Color color) {
 		if (texto.length() >= 1) {
 			DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
@@ -244,6 +236,17 @@ public class Controller implements ActionListener {
 			JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
 		}
 	}
+	
+	
+	/**
+	 * Este método se usa para subrayar las palabrabras que coinciden del JTextArea
+	 *  de la vista (diferenciando entre mayusculas y minusculas)
+	 * @param area1
+	 * @param texto
+	 * @param color
+	 */
+	
+	
 	public void palabrasResaltadasBoyerM(JTextArea area1, String texto, Color color) {
 		encontradas = new ArrayList<Integer>();
 		if (texto.length() >= 1) {
@@ -255,6 +258,42 @@ public class Controller implements ActionListener {
 			String caracteres = texto;
 			encontradas.addAll(algoritmoBM.funcionamientoBoyerMoore(text, caracteres));
 	System.out.println(encontradas);
+			boolean termino = false;
+			while (termino==false) {
+				try {
+					for(int i=0;i<encontradas.size();i++) {
+						h.addHighlight(encontradas.get(i), encontradas.get(i)+texto.length(), highlightPainter);
+					}
+					termino=true;
+				} catch (BadLocationException ex) {
+//                    Logger.getLogger(color.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
+		}
+	}
+	
+	/**
+	 * Este método se usa para subrayar las palabrabras que coinciden del JTextArea
+	 *  de la vista (Sin importar si es mayuscula o minuscula)
+	 * @param area1: JTextArea con el texto a buscar
+	 * @param texto: Texto a buscar dentro del texto de JTextArea
+	 * @param color: color del subrayado
+	 * @return no retorna nada
+	 */
+	
+	public void palabrasResaltadasSinDistincionBoyerM(JTextArea area1, String texto, Color color) {
+		encontradas = new ArrayList<Integer>();
+		texto = texto.toLowerCase();
+		if (texto.length() >= 1) {
+			DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
+					color);
+			Highlighter h = area1.getHighlighter();
+			h.removeAllHighlights();
+			String text = area1.getText().toLowerCase();
+			String caracteres = texto;
+			encontradas.addAll(algoritmoBM.funcionamientoBoyerMoore(text, caracteres));
 			boolean termino = false;
 			while (termino==false) {
 				try {
