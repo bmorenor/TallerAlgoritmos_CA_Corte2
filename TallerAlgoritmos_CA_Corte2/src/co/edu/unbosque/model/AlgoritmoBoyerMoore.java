@@ -78,7 +78,7 @@ public class AlgoritmoBoyerMoore {
 
 	/** Makes the jump table based on the mismatched character information **/
 	private int[] makeCharTable(char[] pattern) {
-		final int ALPHABET_SIZE = 256;
+		final int ALPHABET_SIZE = 2500000;
 		int[] table = new int[ALPHABET_SIZE];
 		for (int i = 0; i < table.length; ++i)
 			table[i] = pattern.length;
