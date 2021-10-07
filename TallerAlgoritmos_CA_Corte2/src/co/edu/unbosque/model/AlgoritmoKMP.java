@@ -8,19 +8,18 @@ public class AlgoritmoKMP {
     private ArrayList<Integer>lista;
     private  String pat;
 
-//    public AlgoritmoKMP(String pat, String txt) {
-//        this.txt = txt;
-//        this.pat = pat;
-//    }
 
+/**
+ * Java Program to implement KMP Algorithm
+ * @param pat
+ * @param txt
+ * @return
+ */
    public ArrayList<Integer> KMPSearch(String pat, String txt)
     {	lista = new ArrayList<>();
         int M = pat.length();
         int N = txt.length();
-    
         int x = 0;
-
-
         // create lps[] that will hold the longest
         // prefix suffix values for pattern
         int lps[] = new int[M];
@@ -37,14 +36,11 @@ public class AlgoritmoKMP {
                 i++;
             }
             if (j == M) {
-            
                 lista.add(i-j);
                 x +=1;
                // mensaje = "Patrón encontrado en el índice " + (i - j);
-            
                 j = lps[j - 1];
             }
-
             // mismatch after j matches
             else if (i < N && pat.charAt(j) != txt.charAt(i)) {
                 // Do not match lps[0..lps[j-1]] characters,
@@ -63,8 +59,7 @@ public class AlgoritmoKMP {
         // length of the previous longest prefix suffix
         int len = 0;
         int i = 1;
-        lps[0] = 0; // lps[0] is always 0
-
+        lps[0] = 0; 
         // the loop calculates lps[i] for i = 1 to M-1
         while (i < M) {
             if (pat.charAt(i) == pat.charAt(len)) {
@@ -72,18 +67,14 @@ public class AlgoritmoKMP {
                 lps[i] = len;
                 i++;
             }
-            else // (pat[i] != pat[len])
+            else 
             {
                 // This is tricky. Consider the example.
-                // AAACAAAA and i = 7. The idea is similar
-                // to search step.
                 if (len != 0) {
                     len = lps[len - 1];
-
                     // Also, note that we do not increment
-                    // i here
                 }
-                else // if (len == 0)
+                else 
                 {
                     lps[i] = len;
                     i++;
@@ -93,34 +84,4 @@ public class AlgoritmoKMP {
     }
 
 
-
-    // Driver program to test above function
-  //  public static void main(String args[]){
-
-//        try {
-//            BufferedReader lector = new BufferedReader(new FileReader("prueba.txt"));
-//            StringBuilder cadena = new StringBuilder();
-//            String line = null;
-//
-//            while ((line = lector.readLine()) != null) {
-//                cadena.append(line);
-//
-//            }
-//            lector.close();
-//            String contenido = cadena.toString();
-//            System.out.println(contenido);
-//
-//        } catch (FileNotFoundException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        String txt = "ABcdeeefgeee";
-//        String pat = "e";
-
-    //    new public AlgoritmoKMP().KMPSearch(pat, txt);
-
-  //  }
 }
