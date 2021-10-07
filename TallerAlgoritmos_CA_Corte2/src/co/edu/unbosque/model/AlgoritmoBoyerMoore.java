@@ -2,17 +2,23 @@ package co.edu.unbosque.model;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 
 public class AlgoritmoBoyerMoore {
+	private ArrayList<Integer>lista;
+
 	/**
 	 ** Java Program to implement Boyer Moore Algorithm
 	 **/
-	public void funcionamientoBoyerMoore(String t, String p) {
+	public ArrayList<Integer> funcionamientoBoyerMoore(String t, String p) {
+		lista = new ArrayList<>();
 		int pos = 0;
 		String texto = t;
-
+		int cont = 0;
 		while (pos < t.length()) {
+			
 
 			String nuevoTexto = texto.substring(pos, t.length());
 
@@ -20,15 +26,24 @@ public class AlgoritmoBoyerMoore {
 
 			if (nuevaPos != -1) {
 				pos = pos + nuevaPos;
-				System.out.println("Posicion: " + pos);
+				lista.add(pos);
 				pos++;
 
 			} else {
 				pos += 2;
 			}
-
+				cont++;
 		}
 
+		encontrados(cont);
+
+		return lista;
+
+	}
+	public static int encontrados(int cont) {
+		
+		return cont;
+		
 	}
 
 	/** Class BoyerMoore **/
@@ -108,15 +123,15 @@ public class AlgoritmoBoyerMoore {
 	}
 
 	/** Main Function **/
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Boyer Moore Algorithm Test\n");
-		System.out.println("\nEnter Text\n");
-		String text = br.readLine();
-		System.out.println("\nEnter Pattern\n");
-		String pattern = br.readLine();
-		AlgoritmoBoyerMoore bm = new AlgoritmoBoyerMoore();
-		bm.funcionamientoBoyerMoore(text, pattern);
-	}
+//	public static void main(String[] args) throws IOException {
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		System.out.println("Boyer Moore Algorithm Test\n");
+//		System.out.println("\nEnter Text\n");
+//		String text = br.readLine();
+//		System.out.println("\nEnter Pattern\n");
+//		String pattern = br.readLine();
+//		AlgoritmoBoyerMoore bm = new AlgoritmoBoyerMoore();
+//		System.out.println(bm.funcionamientoBoyerMoore(text, pattern));
+//	}
 
 }

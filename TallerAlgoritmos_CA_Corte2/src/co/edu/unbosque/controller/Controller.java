@@ -3,6 +3,10 @@ package co.edu.unbosque.controller;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +17,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 
+import co.edu.unbosque.model.AlgoritmoBoyerMoore;
 import co.edu.unbosque.model.OperacionArchivo;
 import co.edu.unbosque.view.PanelBuscar;
 import co.edu.unbosque.view.PanelOpciones;
@@ -22,7 +27,10 @@ import co.edu.unbosque.view.VentanaPrincipal;
 /**
  * Clase Controller
  * 
- * @author Brayan Moreno Andres Nuñez Miguel Sierra Sergio Gomez
+ * @author Brayan Moreno
+ *  Andres Nuñez
+ *  Miguel Sierra
+ *  Sergio Gomez
  * 
  */
 public class Controller implements ActionListener {
@@ -33,6 +41,8 @@ public class Controller implements ActionListener {
 	private PanelPrincipal panelPrincipal;
 	private PanelOpciones panelOpciones;
 	private PanelBuscar panelBuscar;
+	private AlgoritmoBoyerMoore algoritmoBM;
+	private ArrayList<Integer> encontradas;
 
 	/**
 	 * Constructor del controller inicialización de variables
@@ -43,6 +53,7 @@ public class Controller implements ActionListener {
 		panelPrincipal = new PanelPrincipal();
 		panelOpciones = new PanelOpciones();
 		panelBuscar = new PanelBuscar();
+		algoritmoBM =  new AlgoritmoBoyerMoore();
 
 		listener(this);
 	}
@@ -67,6 +78,7 @@ public class Controller implements ActionListener {
 		 */
 		panelBuscar.getRbtnConDistin().addActionListener(escuchador);
 		panelBuscar.getRbtnSinDistin().addActionListener(escuchador);
+		
 
 	}
 
@@ -185,8 +197,15 @@ public class Controller implements ActionListener {
 
 		}
 		if (botonPulsado == panelBuscar.getBotonBM()) {
-			String cadenaBuscar = panelBuscar.getCampoTexto().getText();
-			palabrasResaltadas(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
+			if(panelBuscar.getRbtnConDistin().isSelected()) {
+				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
+				palabrasResaltadasBoyerM(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
+			}else if(panelBuscar.getRbtnSinDistin().isSelected()) {
+				
+			}else {
+				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon diistincion o sin \ndistincion de mayusculas");
+			}
+			
 		}
 
 	}
@@ -222,5 +241,32 @@ public class Controller implements ActionListener {
 			JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
 		}
 	}
+	public void palabrasResaltadasBoyerM(JTextArea area1, String texto, Color color) {
+		encontradas = new ArrayList<Integer>();
+		if (texto.length() >= 1) {
+			DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
+					color);
+			Highlighter h = area1.getHighlighter();
+			h.removeAllHighlights();
+			String text = area1.getText();
+			String caracteres = texto;
+			encontradas.addAll(algoritmoBM.funcionamientoBoyerMoore(text, caracteres));
+	System.out.println(encontradas);
+			boolean termino = false;
+			while (termino==false) {
+				try {
+					for(int i=0;i<encontradas.size();i++) {
+						h.addHighlight(encontradas.get(i), encontradas.get(i)+texto.length(), highlightPainter);
+					}
+					termino=true;
+				} catch (BadLocationException ex) {
+//                    Logger.getLogger(color.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
+		}
+	}
+
 
 }
