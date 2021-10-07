@@ -1,11 +1,22 @@
 package co.edu.unbosque.model;
 
+public class AlgoritmoKMP {
 
-class AlgoritmoKMP {
-    void KMPSearch(String pat, String txt)
+    private  String txt;
+    private  String pat;
+
+//    public AlgoritmoKMP(String pat, String txt) {
+//        this.txt = txt;
+//        this.pat = pat;
+//    }
+
+   public String KMPSearch(String pat, String txt)
     {
         int M = pat.length();
         int N = txt.length();
+        String mensaje = " ";
+        int x = 0;
+
 
         // create lps[] that will hold the longest
         // prefix suffix values for pattern
@@ -24,6 +35,9 @@ class AlgoritmoKMP {
             }
             if (j == M) {
                 System.out.println("Patrón encontrado en el índice " + (i - j));
+                x +=1;
+               // mensaje = "Patrón encontrado en el índice " + (i - j);
+                mensaje = x+"";
                 j = lps[j - 1];
             }
 
@@ -37,6 +51,7 @@ class AlgoritmoKMP {
                     i = i + 1;
             }
         }
+       return mensaje;
     }
 
     void computeLPSArray(String pat, int M, int lps[])
@@ -76,7 +91,7 @@ class AlgoritmoKMP {
 
 
     // Driver program to test above function
-    public static void main(String args[]){
+  //  public static void main(String args[]){
 
 //        try {
 //            BufferedReader lector = new BufferedReader(new FileReader("prueba.txt"));
@@ -98,9 +113,10 @@ class AlgoritmoKMP {
 //            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
-        String txt = "ABcdeeefgeee";
-        String pat = "e";
-        new AlgoritmoKMP().KMPSearch(pat, txt);
+//        String txt = "ABcdeeefgeee";
+//        String pat = "e";
 
-    }
+    //    new public AlgoritmoKMP().KMPSearch(pat, txt);
+
+  //  }
 }

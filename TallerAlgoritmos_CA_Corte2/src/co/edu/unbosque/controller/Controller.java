@@ -23,15 +23,16 @@ import co.edu.unbosque.view.PanelBuscar;
 import co.edu.unbosque.view.PanelOpciones;
 import co.edu.unbosque.view.PanelPrincipal;
 import co.edu.unbosque.view.VentanaPrincipal;
+import co.edu.unbosque.model.AlgoritmoKMP;
 
 /**
  * Clase Controller
- * 
+ *
  * @author Brayan Moreno
  *  Andres Nuñez
  *  Miguel Sierra
  *  Sergio Gomez
- * 
+ *
  */
 public class Controller implements ActionListener {
 
@@ -42,6 +43,7 @@ public class Controller implements ActionListener {
 	private PanelOpciones panelOpciones;
 	private PanelBuscar panelBuscar;
 	private AlgoritmoBoyerMoore algoritmoBM;
+	private AlgoritmoKMP algoritmoKMP;
 	private ArrayList<Integer> encontradas;
 
 	/**
@@ -54,13 +56,15 @@ public class Controller implements ActionListener {
 		panelOpciones = new PanelOpciones();
 		panelBuscar = new PanelBuscar();
 		algoritmoBM =  new AlgoritmoBoyerMoore();
+		algoritmoKMP =  new AlgoritmoKMP();
+
 
 		listener(this);
 	}
 
 	/**
 	 * Metodo para obtener los eventos de los botones
-	 * 
+	 *
 	 * @param escuchador
 	 */
 	private void listener(ActionListener escuchador) {
@@ -78,7 +82,7 @@ public class Controller implements ActionListener {
 		 */
 		panelBuscar.getRbtnConDistin().addActionListener(escuchador);
 		panelBuscar.getRbtnSinDistin().addActionListener(escuchador);
-		
+
 
 	}
 
@@ -93,14 +97,14 @@ public class Controller implements ActionListener {
 			ventanaPrincipal.setContentPane(panelOpciones);
 			ventanaPrincipal.validate();
 		}
-		
+
 		/**
 		 * Validacion para habilitar los radio button en caso de no estar seleccionado ninguno
 		 */
 		if(!panelBuscar.getRbtnConDistin().isSelected()&&!panelBuscar.getRbtnSinDistin().isSelected()) {
 			panelBuscar.getRbtnSinDistin().setEnabled(true);
 			panelBuscar.getRbtnConDistin().setEnabled(true);
-			
+
 		}
 		/**
 		 * Validacion para deshabilitar el radioboton Sin distincion en caso de que el radioboton Con distincion este seleccionado
@@ -170,11 +174,26 @@ public class Controller implements ActionListener {
 			ventanaPrincipal.setContentPane(panelOpciones);
 			ventanaPrincipal.validate();
 		}
+
+
 		if (botonPulsado == panelBuscar.getBotonKMP()) {
 
-			String cadenaBuscar = panelBuscar.getCampoTexto().getText();
-			palabrasResaltadas(panelBuscar.getTabla(), cadenaBuscar, Color.YELLOW);
+			if(panelBuscar.getRbtnConDistin().isSelected()) {
+				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
+				palabrasResaltadasKMP(panelBuscar.getTabla(), cadenaBuscar, Color.YELLOW);
+				String txt1 = " ";
+				txt1 = algoritmoKMP.KMPSearch(cadenaBuscar, contenido);
+				panelBuscar.getCampoTextoRepetidos().setText(txt1);
 
+			}else if(panelBuscar.getRbtnSinDistin().isSelected()) {
+				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
+				palabrasResaltadas(panelBuscar.getTabla(), cadenaBuscar, Color.YELLOW);
+				String txt1 = " ";
+				txt1 = algoritmoKMP.KMPSearch(cadenaBuscar, contenido);
+				panelBuscar.getCampoTextoRepetidos().setText(txt1);
+			}else {
+				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon diistincion o sin \ndistincion de mayusculas");
+			}
 		}
 		if (botonPulsado == panelBuscar.getBotonBM()) {
 			if(panelBuscar.getRbtnConDistin().isSelected()) {
@@ -182,19 +201,20 @@ public class Controller implements ActionListener {
 				palabrasResaltadasBoyerM(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
 			}else if(panelBuscar.getRbtnSinDistin().isSelected()) {
 				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
-				palabrasResaltadasSinDistincionBoyerM(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
+				palabrasResaltadas(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
 			}else {
 				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon diistincion o sin \ndistincion de mayusculas");
 			}
-			
+
 		}
 
+
 	}
-/**
- * Valida si el archivo seleccionado es un archivo plano
- * @param path
- * @return
- */
+	/**
+	 * Valida si el archivo seleccionado es un archivo plano
+	 * @param path
+	 * @return
+	 */
 	public static boolean validarFormato(String path) {
 		;
 		boolean respuesta = false;
@@ -205,7 +225,7 @@ public class Controller implements ActionListener {
 		return respuesta;
 	}
 
-	
+
 	/**
 	 * Este método se usa para subrayar las palabrabras que coinciden del JTextArea
 	 *  de la vista (diferenciando entre mayusculas y minusculas)
@@ -213,8 +233,8 @@ public class Controller implements ActionListener {
 	 * @param texto
 	 * @param color
 	 */
-	
-	
+
+
 	public void palabrasResaltadas(JTextArea area1, String texto, Color color) {
 		if (texto.length() >= 1) {
 			DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
@@ -236,8 +256,76 @@ public class Controller implements ActionListener {
 			JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
 		}
 	}
-	
-	
+
+	/**
+	 * Este método se usa para subrayar las palabrabras que coinciden del JTextArea
+	 * de la vista (diferenciando entre mayusculas y minusculas)
+	 * @param area1
+	 * @param texto
+	 * @param color
+	 */
+	public void palabrasResaltadasSinDistincionKMP(JTextArea area1, String texto, Color color) {
+		encontradas = new ArrayList<Integer>();
+		texto = texto.toLowerCase();
+		if (texto.length() >= 1) {
+			DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
+					color);
+			Highlighter h = area1.getHighlighter();
+			h.removeAllHighlights();
+			String text = area1.getText().toLowerCase();
+			String caracteres = texto;
+			//encontradas.addAll(algoritmoBM.funcionamientoBoyerMoore(text, caracteres));
+			//panelBuscar.getCampoTextoRepetidos().setText(encontradas.size()+"");
+			boolean termino = false;
+			while (termino==false) {
+				try {
+					for(int i=0;i<encontradas.size();i++) {
+						h.addHighlight(encontradas.get(i), encontradas.get(i)+texto.length(), highlightPainter);
+					}
+					termino=true;
+				} catch (BadLocationException ex) {
+//                    Logger.getLogger(color.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
+		}
+	}
+
+	/**
+	 * Este método se usa para subrayar las palabrabras que coinciden del JTextArea
+	 * de la vista (diferenciando entre mayusculas y minusculas)
+	 * @param area1
+	 * @param texto
+	 * @param color
+	 */
+	public void palabrasResaltadasKMP(JTextArea area1, String texto, Color color) {
+		encontradas = new ArrayList<Integer>();
+		if (texto.length() >= 1) {
+			DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(
+					color);
+			Highlighter h = area1.getHighlighter();
+			h.removeAllHighlights();
+			String text = area1.getText();
+			String caracteres = texto;
+			//encontradas.addAll(algoritmoBM.funcionamientoBoyerMoore(text, caracteres));
+			//panelBuscar.getCampoTextoRepetidos().setText(encontradas.size()+"");
+			boolean termino = false;
+			while (termino==false) {
+				try {
+					for(int i=0;i<encontradas.size();i++) {
+						h.addHighlight(encontradas.get(i), encontradas.get(i)+texto.length(), highlightPainter);
+					}
+					termino=true;
+				} catch (BadLocationException ex) {
+//                    Logger.getLogger(color.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
+		}
+	}
+
 	/**
 	 * Este método se usa para subrayar las palabrabras que coinciden del JTextArea
 	 *  de la vista (diferenciando entre mayusculas y minusculas)
@@ -245,8 +333,8 @@ public class Controller implements ActionListener {
 	 * @param texto
 	 * @param color
 	 */
-	
-	
+
+
 	public void palabrasResaltadasBoyerM(JTextArea area1, String texto, Color color) {
 		encontradas = new ArrayList<Integer>();
 		if (texto.length() >= 1) {
@@ -273,7 +361,7 @@ public class Controller implements ActionListener {
 			JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
 		}
 	}
-	
+
 	/**
 	 * Este método se usa para subrayar las palabrabras que coinciden del JTextArea
 	 *  de la vista (Sin importar si es mayuscula o minuscula)
@@ -282,7 +370,7 @@ public class Controller implements ActionListener {
 	 * @param color: color del subrayado
 	 * @return no retorna nada
 	 */
-	
+
 	public void palabrasResaltadasSinDistincionBoyerM(JTextArea area1, String texto, Color color) {
 		encontradas = new ArrayList<Integer>();
 		texto = texto.toLowerCase();
