@@ -257,7 +257,7 @@ public class Controller implements ActionListener {
 			String text = area1.getText();
 			String caracteres = texto;
 			encontradas.addAll(algoritmoBM.funcionamientoBoyerMoore(text, caracteres));
-	System.out.println(encontradas);
+			panelBuscar.getCampoTextoRepetidos().setText(encontradas.size()+"");
 			boolean termino = false;
 			while (termino==false) {
 				try {
@@ -294,6 +294,7 @@ public class Controller implements ActionListener {
 			String text = area1.getText().toLowerCase();
 			String caracteres = texto;
 			encontradas.addAll(algoritmoBM.funcionamientoBoyerMoore(text, caracteres));
+			panelBuscar.getCampoTextoRepetidos().setText(encontradas.size()+"");
 			boolean termino = false;
 			while (termino==false) {
 				try {
