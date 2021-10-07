@@ -188,7 +188,7 @@ public class Controller implements ActionListener {
 			
 		
 			}else {
-				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon diistincion o sin \ndistincion de mayusculas");
+				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon distincion o sin \ndistincion de mayusculas");
 			}
 		}
 		if (botonPulsado == panelBuscar.getBotonBM()) {
@@ -197,9 +197,9 @@ public class Controller implements ActionListener {
 				palabrasResaltadasBoyerM(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
 			}else if(panelBuscar.getRbtnSinDistin().isSelected()) {
 				String cadenaBuscar = panelBuscar.getCampoTexto().getText();
-				palabrasResaltadas(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
+				palabrasResaltadasSinDistincionBoyerM(panelBuscar.getTabla(), cadenaBuscar, Color.cyan);
 			}else {
-				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon diistincion o sin \ndistincion de mayusculas");
+				ventanaPrincipal.mostrarError("Por favor seleccione si desea buscar\ncon distincion o sin \ndistincion de mayusculas");
 			}
 
 		}
